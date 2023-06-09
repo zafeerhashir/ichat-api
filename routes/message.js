@@ -25,7 +25,6 @@ router.get('/:id', async (req, res) => {
   try {
     const { params } = req;
     const { id } = params;
-    console.log(id);
     const messages = await Message.
       find({ conversation: id }).
       populate('from').

@@ -19,7 +19,6 @@ export const setUserOnline = (username, socketId) => {
 };
 
 export const setUserOffline = (socketId) => {
-  console.log(socketId)
   return new Promise((resolve, reject) => {
     User.findOneAndUpdate({
       socketId
