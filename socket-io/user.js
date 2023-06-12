@@ -1,4 +1,7 @@
 import User from '../models/user.js'
+import events from './events.js';
+
+const { USER_ONLINE } = events;
 
 export const setUserOnline = (username, socketId) => {
   return new Promise((resolve, reject) => {
@@ -53,3 +56,17 @@ export const getOnlineUser = (username) => {
     })
   })
 };
+
+export const userOnlineSocket = async (username) => {
+  try {
+    await setUserOnline(username, socket.id);
+    io.emit(USER_ONLINE, username);
+  } catch (error) { }
+};
+
+export const userOfflineSocket = async () => {
+  try {
+    await setUserOffline(socket.id);
+  } catch (error) {
+  }
+}

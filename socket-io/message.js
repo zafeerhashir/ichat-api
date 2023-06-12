@@ -1,6 +1,9 @@
 import Message from '../models/message.js'
 import Conversation from '../models/conversation.js'
 import User from '../models/user.js'
+import events from './events.js';
+
+const { PRIVATE_MESSAGE } = events;
 
 export const saveMessage = async (from, to, text) => {
   try {
@@ -36,4 +39,13 @@ const getConversationId = async (from, to) => {
 const updateConversationMessagesRefrences = async (conversationId, messageId) => {
   const conversationList = await Conversation.findByIdAndUpdate(conversationId, { $push: { messages: messageId } });
   await conversationList.save();
+}
+
+export const privateMessage = async (usernameFrom, usernameTo, message) => {
+  try {
+    await saveMessage(usernameFrom, usernameTo, message);
+    const user = await getOnlineUser(usernameTo);
+    io.to(user.socketId).emit(PRIVATE_MESSAGE, usernameFrom, usernameTo, message);
+  } catch (error) {
+  }
 }

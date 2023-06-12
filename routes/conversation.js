@@ -33,7 +33,14 @@ router.get('/', async (req, res) => {
     const conversations = await Conversation.
       find().
       populate('users').
-      populate('messages').
+      populate({
+        path: 'messages',
+        options: {
+          sort: { createdAt: -1 },
+          perDocumentLimit: 1,
+        }
+
+      }).
       exec();
     res.send(conversations);
   } catch (error) {
