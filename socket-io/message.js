@@ -46,9 +46,7 @@ export const privateMessage = (io) => async (usernameFrom, usernameTo, message) 
   try {
     await saveMessage(usernameFrom, usernameTo, message);
     const user = await getOnlineUser(usernameTo);
-    console.log(user)
     io.to(user.socketId).emit(PRIVATE_MESSAGE, usernameFrom, usernameTo, message);
   } catch (error) {
-    console.log(error)
   }
 }
