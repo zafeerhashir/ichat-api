@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'ichat-app-api'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A1690012571C48B4A90CAC663F541D8C }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D52BDC76F9624074A9DFD4FCE65E32E9 }}
           package: .
