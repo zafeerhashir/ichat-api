@@ -2,6 +2,7 @@ import Message from '../models/message.js'
 import Conversation from '../models/conversation.js'
 import User from '../models/user.js'
 import events from './events.js';
+import { getOnlineUser } from './user.js'
 
 const { PRIVATE_MESSAGE } = events;
 
@@ -41,11 +42,13 @@ const updateConversationMessagesRefrences = async (conversationId, messageId) =>
   await conversationList.save();
 }
 
-export const privateMessage = async (usernameFrom, usernameTo, message) => {
+export const privateMessage = (io) => async (usernameFrom, usernameTo, message) => {
   try {
     await saveMessage(usernameFrom, usernameTo, message);
     const user = await getOnlineUser(usernameTo);
+    console.log(user)
     io.to(user.socketId).emit(PRIVATE_MESSAGE, usernameFrom, usernameTo, message);
   } catch (error) {
+    console.log(error)
   }
 }

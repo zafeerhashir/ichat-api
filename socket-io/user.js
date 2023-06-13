@@ -48,7 +48,7 @@ export const getOnlineUser = (username) => {
       if (error) {
         reject(error);
       }
-      if (Object.keys(result).length === 0) {
+      if (!result || Object.keys(result).length === 0) {
         reject('error');
       }
       resolve(result);
@@ -57,7 +57,7 @@ export const getOnlineUser = (username) => {
   })
 };
 
-export const userOnlineSocket = async (username) => {
+export const userOnlineSocket = (io, socket) => async (username) => {
   try {
     await setUserOnline(username, socket.id);
     io.emit(USER_ONLINE, username);
