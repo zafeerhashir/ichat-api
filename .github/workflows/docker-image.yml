@@ -1,4 +1,4 @@
-name: CI-CD
+name: GITHUB-DOCKER
 
 # Controls when the action will run.
 on:
