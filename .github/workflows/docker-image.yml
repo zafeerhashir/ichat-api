@@ -69,7 +69,8 @@ jobs:
       - name: Run the image in a container
         uses: addnab/docker-run-action@v3
         with:
-          token: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
           image: ${{ secrets.DOCKERHUB_USERNAME }}/ichat-api:ichat-api
           run: |
             echo "runing the docker image"
