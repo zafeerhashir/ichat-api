@@ -17,7 +17,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build Docker image
         run: |
-          docker build -t ichat-api:$(date) .
+          docker build -t ichat-api:${{ github.sha }} .
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/ichat-api:$(date)
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/ichat-api:ichat-api:${{ github.sha }}
