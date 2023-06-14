@@ -72,5 +72,5 @@ jobs:
           image: ${{ secrets.DOCKERHUB_USERNAME }}/ichat-api:latest
           run: |
             echo "runing the docker image"
-            echo "Testing the nodejs  app endpoints"
+            echo "Testing the ichat-api app endpoints"
             echo ${{ steps.docker_build.outputs.digest }}
