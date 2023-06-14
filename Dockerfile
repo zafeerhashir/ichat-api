@@ -1,6 +1,7 @@
 # Use the official Node.js image as the base
 FROM node:14
 
+
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 
@@ -17,4 +18,4 @@ COPY . .
 EXPOSE 3001
 
 # Start the app
-CMD [ "node", "app" ]
+CMD ["npx" ,"pm2-runtime", "start", "ecosystem.config.cjs" ]
