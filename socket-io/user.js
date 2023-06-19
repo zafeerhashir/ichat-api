@@ -64,7 +64,7 @@ export const userOnlineSocket = (io, socket) => async (username) => {
   } catch (error) { }
 };
 
-export const userOfflineSocket = async () => {
+export const userOfflineSocket = (socket) => async () => {
   try {
     await setUserOffline(socket.id);
   } catch (error) {

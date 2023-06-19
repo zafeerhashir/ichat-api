@@ -16,7 +16,7 @@ function initSocket(httpServer) {
   io.on(CONNECTION, (socket) => {
     socket.on(USER_ONLINE, userOnlineSocket(io, socket));
     socket.on(PRIVATE_MESSAGE, privateMessage(io));
-    socket.on(DISCONNECT, userOfflineSocket);
+    socket.on(DISCONNECT, userOfflineSocket(socket));
   });
 }
 
