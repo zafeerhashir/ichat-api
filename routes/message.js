@@ -45,7 +45,7 @@ async function getConversationId(req) {
     }
   })
 
-  if (conversationList && conversationList.length > 1) {
+  if (conversationList && conversationList.length > 0) {
     const [item] = conversationList
     const { _id } = item;
     return _id;

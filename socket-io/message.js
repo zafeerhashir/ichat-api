@@ -6,11 +6,11 @@ import { getOnlineUser } from './user.js'
 
 const { PRIVATE_MESSAGE } = events;
 
-export const saveMessage = async (from, to, text) => {
+export const saveMessage = async (fromUserId, toUserId, text) => {
+
   try {
-    const [fromUser, toUser] = await User.find({ username: { $in: [from, to] } });
-    const id = await getConversationId(fromUser._id, toUser._id)
-    const message = new Message({ conversation: id, from: fromUser._id, to: toUser._id, text });
+    const id = await getConversationId(fromUserId, toUserId)
+    const message = new Message({ conversation: id, from: fromUserId, to: toUserId, text });
     const { _id } = message;
     await message.save();
     await updateConversationMessagesRefrences(id, _id);
@@ -42,11 +42,13 @@ const updateConversationMessagesRefrences = async (conversationId, messageId) =>
   await conversationList.save();
 }
 
-export const privateMessage = (io) => async (usernameFrom, usernameTo, message) => {
+export const privateMessage = (io) => async (userIdFrom, userIdTo, message) => {
   try {
-    await saveMessage(usernameFrom, usernameTo, message);
-    const user = await getOnlineUser(usernameTo);
-    io.to(user.socketId).emit(PRIVATE_MESSAGE, usernameFrom, usernameTo, message);
+    await saveMessage(userIdFrom, userIdTo, message);
+    const user = await getOnlineUser(userIdTo);
+    if (user.socketId) {
+      io.to(user.socketId).emit(PRIVATE_MESSAGE, userIdFrom, userIdTo, message);
+    }
   } catch (error) {
   }
 }

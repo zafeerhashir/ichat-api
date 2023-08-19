@@ -3,11 +3,9 @@ import events from './events.js';
 
 const { USER_ONLINE } = events;
 
-export const setUserOnline = (username, socketId) => {
+export const setUserOnline = (userId, socketId) => {
   return new Promise((resolve, reject) => {
-    User.findOneAndUpdate({
-      username
-    }, {
+    User.findByIdAndUpdate(userId, {
       online: true,
       socketId
     }, {
@@ -39,10 +37,10 @@ export const setUserOffline = (socketId) => {
   })
 };
 
-export const getOnlineUser = (username) => {
+export const getOnlineUser = (userId) => {
   return new Promise((resolve, reject) => {
     User.findOne({
-      username,
+      _id: userId,
       online: true
     }, (error, result) => {
       if (error) {
@@ -57,10 +55,10 @@ export const getOnlineUser = (username) => {
   })
 };
 
-export const userOnlineSocket = (io, socket) => async (username) => {
+export const userOnlineSocket = (io, socket) => async (userId) => {
   try {
-    await setUserOnline(username, socket.id);
-    io.emit(USER_ONLINE, username);
+    await setUserOnline(userId, socket.id);
+    io.emit(USER_ONLINE, userId);
   } catch (error) { }
 };
 
