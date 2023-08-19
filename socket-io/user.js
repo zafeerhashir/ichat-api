@@ -58,7 +58,9 @@ export const getOnlineUser = (userId) => {
 export const userOnlineSocket = (io, socket) => async (userId) => {
   try {
     await setUserOnline(userId, socket.id);
+    socket.join(userId)
     io.emit(USER_ONLINE, userId);
+    socket.broadcast.emit(USER_ONLINE, userId)
   } catch (error) { }
 };
 

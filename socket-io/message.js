@@ -45,10 +45,7 @@ const updateConversationMessagesRefrences = async (conversationId, messageId) =>
 export const privateMessage = (io) => async (userIdFrom, userIdTo, message) => {
   try {
     await saveMessage(userIdFrom, userIdTo, message);
-    const user = await getOnlineUser(userIdTo);
-    if (user.socketId) {
-      io.to(user.socketId).emit(PRIVATE_MESSAGE, userIdFrom, userIdTo, message);
-    }
+    io.to(userIdTo).emit(PRIVATE_MESSAGE, userIdFrom, userIdTo, message);
   } catch (error) {
   }
 }
