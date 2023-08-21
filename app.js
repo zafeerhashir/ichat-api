@@ -6,6 +6,7 @@ import './db/connection.js';
 import user from './routes/user.js'
 import conversation from './routes/conversation.js'
 import message from './routes/message.js'
+import login from './routes/login.js'
 import initSocket from './socket-io/socket.js';
 
 const app = express();
@@ -24,6 +25,8 @@ app.get('/', (req, res) => {
 app.use('/user', user)
 app.use('/conversation', conversation)
 app.use('/message', message)
+app.use('/login', login)
+
 
 httpServer.listen(process.env.PORT, () => {
   console.log(`App listening on port ${process.env.PORT}!`);
