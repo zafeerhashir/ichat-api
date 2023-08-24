@@ -21,6 +21,14 @@ router.get('/:id', async (req, res) => {
     const conversations = await Conversation.
       find({ users: { $in: [id] } }).
       populate('users').
+      populate({
+        path: 'messages',
+        options: {
+          sort: { createdAt: -1 },
+          perDocumentLimit: 1,
+        }
+
+      }).
       exec();
     res.send(conversations);
   } catch (error) {
