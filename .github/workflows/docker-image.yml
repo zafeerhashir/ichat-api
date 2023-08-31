@@ -50,3 +50,6 @@ jobs:
             echo "runing the docker image"
             echo "Testing the ichat-api app endpoints"
             echo ${{ steps.docker_build.outputs.digest }}
+        env:
+          DB: ${{ secrets.DB }}
+
