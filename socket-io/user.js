@@ -1,7 +1,7 @@
 import User from '../models/user.js'
 import events from './events.js';
 
-const { USER_ONLINE } = events;
+const { USER_ONLINE, PRIVATE_MESSAGE } = events;
 
 export const setUserOnline = (userId, socketId) => {
   return new Promise((resolve, reject) => {
@@ -70,3 +70,9 @@ export const userOfflineSocket = (socket) => async () => {
   } catch (error) {
   }
 }
+
+export const userTypingSocket = (io) => async (userIdTo, typing) => {
+  try {
+    io.to(userIdTo).emit(PRIVATE_MESSAGE, typing);
+  } catch (error) { }
+};
