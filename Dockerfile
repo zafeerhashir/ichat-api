@@ -14,6 +14,9 @@ RUN npm install
 # Copy the rest of the application files to the container
 COPY . .
 
+# Set the environment variable
+ENV DB=$DB
+
 # Expose the port that the app will listen on
 EXPOSE 3001
 
